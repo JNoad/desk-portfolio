@@ -44,6 +44,7 @@ export default {
             height: 100%;
             margin: 0;
             position: relative;
+            perspective: 2000px;
             li {
                 height: 110px; width: 28px;
                 margin: 0 4px;
@@ -56,7 +57,7 @@ export default {
                 align-items: center;
                 display: flex;
                 &:hover {
-                    
+                    transform: scale(1.05);
                 }
                 a {
                     padding: 4px;

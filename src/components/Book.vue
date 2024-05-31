@@ -4,14 +4,9 @@
             <img width="48" height="48" src="https://img.icons8.com/fluency-systems-filled/48/000000/circled-left-2--v2.png" alt="circled-left-2--v2"/>
         </button>
         <div class="book-cover">
-            <div class="book-interior" :class="{pagingBackward: 'paging-backward'}, {pagingForeward: 'paging-foreward'}">
-                <div class="book-page book-left-page">
-                    <h2>About Me</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus voluptate deleniti asperiores, beatae rerum aspernatur dolorem odio assumenda inventore aut praesentium, provident hic necessitatibus dolorum placeat magnam iure vel impedit, nemo ipsum. Minus asperiores odio nulla aut dolor praesentium iure. Numquam atque accusantium nam, corrupti consequatur vitae rerum repellendus voluptatibus?</p>
-                </div>
-                <div class="book-page book-right-page">
-    
-                </div>
+            <div class="book-interior">
+                <Page v-for="(page, index) in pages" :key="index" :msg="'Page ' + (index + 1)"/>
+
             </div>
         </div>
         <button @click="pageForeward()">
@@ -19,35 +14,53 @@
         </button>
     </div>
 </template>
+
 <script>
+import Page from '@/components/Page.vue';
 
 export default {
-    data() {
-        return {
-            pagingBackward: false,
-            pagingForeward: false,      
-        }
+    components: {
+        Page
     },
+    props: ['pages'],
     methods: {
         pageBackward() {
-            
-            this.pagingBackward = true
-            setTimeout(() => {
-                this.pagingBackward = false
-            }, 1000)
+            let pages = document.querySelectorAll('.book-page.flipped');
+            let page = pages[pages.length - 1];
+
+            if(page){
+                page.classList.remove('flipped');
+                page.classList.add('unflipped');
+                this.setPageZindex()
+            }
         },
         pageForeward() {
-            let page = document.querySelector('.book-right-page');
-
-            page.classList += ' flip'
-            this.pagingForeward = true
-            setTimeout(() => {
-                this.pagingForeward = false
-            }, 1000)
+            let page = document.querySelectorAll('.book-page.unflipped')[0];
+            if(page){
+                page.classList.add('flipped');
+                page.classList.remove('unflipped');
+                setTimeout(()=> {
+                    this.setPageZindex()
+                }, 500)
+            }
         },
+        setPageZindex() {
+            this.pages.forEach((pageData, index) => {
+                let page = document.querySelectorAll('.book-page')[index];
+                if (page.classList.contains('flipped')) {
+                    page.style.zIndex = ''
+                } else {
+                    page.style.zIndex = this.pages.length - index
+                }
+            });
+        }
+    },
+    mounted() {
+        this.setPageZindex()
     },
 }
 </script>
+
 <style lang="scss">
     .book {
         display: flex;
@@ -65,47 +78,24 @@ export default {
 
     .book-interior {
         width: 100%; height: 100%;
-        // background-color: #fff;
         border-radius: inherit;
         display: flex;
-        // overflow: hidden;
+        justify-content: end;
         box-shadow: 0 0 6px -3px black;
         perspective: 2000px;
+        > * {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
 
     }
 
-    .book-page {
-        width: 50%; height: 100%;
-        padding: 16px 32px;
-        background-color: #fff;
-        border-radius: 8px 0 0 0 8px;
-        &:nth-child(1) {
-            box-shadow: inset -8px 0 48px -12px black;
 
-        }
-        &:nth-child(2) {
-            box-shadow: inset 8px 0 48px -12px black;
-            // animation: pageBackward 1s;
-        }
-    }
 
     p {
         text-align: left;
     }
 
-    .flip {
-        transform: rotateY(-180deg);
-        transform-origin: left;
-        transition: transform 1s;
-        perspective: 1500px;
-    }
 
-    // Animations
-    @keyframes pageBackward {
-        from {width: 100%;}
-        to {width: 0%;}
-    }
-    @keyframes pageForward {
-        
-    }
 </style>

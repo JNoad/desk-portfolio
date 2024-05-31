@@ -4,7 +4,7 @@
 	</router-link>
 	<div class="about">
 		<!-- <h1>This is an about page</h1> -->
-		<Book/>
+		<Book :pages="array"/>
 	</div>
 </template>
 
@@ -13,7 +13,16 @@ import Book from '@/components/Book.vue';
 export default {
 	components: {
 		Book
-	}
+	},
+	computed: {
+		array() {
+			let arr = []
+			for (let i = 0; i < 20; i++) {
+				arr.push(i)
+			}
+			return arr
+		}
+	},
 }
 </script>
 
