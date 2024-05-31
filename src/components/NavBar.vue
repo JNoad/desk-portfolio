@@ -31,13 +31,9 @@ export default {
 </script>
 <style lang="scss">
     nav {
-        // background-color: #A60;
-        border: 1px solid red;
-
         padding: 0;
         ul {
             display: flex;
-            border: 1px solid black;
             z-index: 11;
             justify-content: center;
             list-style-type: none;
@@ -104,7 +100,7 @@ export default {
         height: 75px;
         margin: auto;
         background-size: cover;
-        border: 1px solid black;
+        // border: 1px solid black;
         position: relative;
         bottom: 16px;
         z-index: 10;

@@ -4,7 +4,11 @@
 	</router-link>
 	<div class="about">
 		<!-- <h1>This is an about page</h1> -->
-		<Book :pages="array"/>
+		<Book :pages="array">
+			<template v-for="(page, index) in array" :key="page" v-slot:[`page-${index}`]>
+				<h1>Hello {{ index }}</h1>
+			</template>
+		</Book>
 	</div>
 </template>
 
@@ -17,7 +21,7 @@ export default {
 	computed: {
 		array() {
 			let arr = []
-			for (let i = 0; i < 20; i++) {
+			for (let i = 0; i < 15; i++) {
 				arr.push(i)
 			}
 			return arr

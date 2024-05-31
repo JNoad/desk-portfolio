@@ -1,8 +1,10 @@
 <template>
     <div class="book-page unflipped">
         <div class="book-page-front">
-            <h1>Front</h1>
-            <h3>{{ msg }}</h3>
+            <slot>
+                <h1>Front</h1>
+                <h3>{{ msg }}</h3>
+            </slot>
         </div>
         <div class="book-page-back">
             <h1>Back</h1>
@@ -18,6 +20,7 @@ export default {
 </script>
 <style lang="scss">
     .book-page {
+        $page-shadow: 0 0 6px -3px black;
         width: 50%; height: 100%;
         position: relative;
         transform-origin: left;
@@ -38,13 +41,13 @@ export default {
             top: 0; right: 0;
         }
         .book-page-front {
-            box-shadow: inset 8px 0 48px -12px black;
+            box-shadow: inset 8px 0 48px -12px black;//, $page-shadow;
             z-index: 2;
             border-radius: inherit;
 
         }
         .book-page-back {
-            box-shadow: inset -8px 0 48px -12px black;
+            box-shadow: inset -8px 0 48px -12px black;//, $page-shadow;
             z-index: 0;
             transform: rotateY(180deg);
             border-radius: 8px 0  0 8px;

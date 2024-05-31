@@ -5,7 +5,9 @@
         </button>
         <div class="book-cover">
             <div class="book-interior">
-                <Page v-for="(page, index) in pages" :key="index" :msg="'Page ' + (index + 1)"/>
+                <Page v-for="(page, index) in pages" :key="index" :msg="'Page ' + (index + 1)">
+                    <slot :name="`page-${index}`"></slot>
+                </Page>
 
             </div>
         </div>
@@ -75,13 +77,11 @@ export default {
         margin: auto; padding: 8px 12px;
         
     }
-
     .book-interior {
         width: 100%; height: 100%;
         border-radius: inherit;
         display: flex;
         justify-content: end;
-        box-shadow: 0 0 6px -3px black;
         perspective: 2000px;
         > * {
             position: absolute;
@@ -91,11 +91,8 @@ export default {
 
     }
 
-
-
     p {
         text-align: left;
     }
-
 
 </style>
