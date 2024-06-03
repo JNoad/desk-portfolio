@@ -7,10 +7,14 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@vue/component-compiler-utils": "^3.3.0",
+    "@vue/server-renderer": "^3.4.27",
     "bootstrap": "^5.3.3",
     "core-js": "^3.37.1",
+    "lodash.template": "^4.5.0",
     "register-service-worker": "^1.7.2",
-    "vue": "^3.2.13",
+    "vue": "^3.4.27",
+    "vue-loader": "^17.4.2",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
   },
@@ -19,7 +23,7 @@
     "@vue/cli-plugin-pwa": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
-    "@vue/cli-service": "~5.0.0",
+    "@vue/cli-service": "^5.0.8",
     "sass": "^1.77.2",
     "sass-loader": "^14.2.1"
   }

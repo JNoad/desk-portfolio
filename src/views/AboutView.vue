@@ -5,10 +5,25 @@
 	<div class="about">
 		<!-- <h1>This is an about page</h1> -->
 		<Book :pages="array">
-			<template v-for="(page, index) in array" :key="page" v-slot:[`page-${index}`]>
-				<h1>Hello {{ index }}</h1>
-			</template>
+			<page>
+				<page-front>
+					<div class="tester-class">
+						<h1>Hello...</h1>
+						<p>My name is Lindayle P. Tutwater</p>
+					</div>
+				</page-front>
+				<page-back>
+					<div class="div-2">
+						Hi
+					</div>
+
+				</page-back>
+			</page>
+
 		</Book>
+		<!-- <page>
+			Hi
+		</page> -->
 	</div>
 </template>
 
@@ -21,7 +36,7 @@ export default {
 	computed: {
 		array() {
 			let arr = []
-			for (let i = 0; i < 15; i++) {
+			for (let i = 0; i < 10; i++) {
 				arr.push(i)
 			}
 			return arr

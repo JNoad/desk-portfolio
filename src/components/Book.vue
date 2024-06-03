@@ -5,8 +5,14 @@
         </button>
         <div class="book-cover">
             <div class="book-interior">
-                <Page v-for="(page, index) in pages" :key="index" :msg="'Page ' + (index + 1)">
-                    <slot :name="`page-${index}`"></slot>
+                <Page v-for="(page, index) in pages" :key="index" :msg="'Page ' + (index + 1)" >
+                    <!-- <slot :name="`page-${index}-front`"></slot> -->
+                    <template v-slot:page-front>
+                        <div v-html="page.content.front"></div>
+                    </template>
+                    <template v-slot:page-back>
+                        <div v-html="page.content.back"></div>
+                    </template>
                 </Page>
 
             </div>
@@ -19,12 +25,21 @@
 
 <script>
 import Page from '@/components/Page.vue';
+import { renderToString } from 'vue/server-renderer';
 
 export default {
     components: {
         Page
     },
-    props: ['pages'],
+    // props: ['pages'],
+    data() {
+        return {
+            slotContent: '',
+            contentLeft: '',
+            contentRight: '',
+            pages: [],
+        }
+    },
     methods: {
         pageBackward() {
             let pages = document.querySelectorAll('.book-page.flipped');
@@ -33,6 +48,7 @@ export default {
             if(page){
                 page.classList.remove('flipped');
                 page.classList.add('unflipped');
+                this.setPageShadow()
                 this.setPageZindex()
             }
         },
@@ -41,9 +57,27 @@ export default {
             if(page){
                 page.classList.add('flipped');
                 page.classList.remove('unflipped');
+                this.setPageShadow()
                 setTimeout(()=> {
                     this.setPageZindex()
                 }, 500)
+            }
+        },
+        setPageShadow() {
+            let pages = document.querySelectorAll('.book-page');
+            let flipped = document.querySelectorAll('.book-page.flipped');
+            let unFlipped = document.querySelectorAll('.book-page.unflipped');
+
+            pages.forEach(page => {
+                page.classList.remove('backshadow-page')
+                page.classList.remove('frontshadow-page')
+            })
+            if (flipped.length) {
+                flipped[flipped.length -1].classList.add('backshadow-page');
+            }
+
+            if (unFlipped.length) {
+                unFlipped[0].classList.add('frontshadow-page');
             }
         },
         setPageZindex() {
@@ -55,10 +89,43 @@ export default {
                     page.style.zIndex = this.pages.length - index
                 }
             });
-        }
+        },
+        async renderSlotContent() {
+            const vnodes = this.$slots.default ? this.$slots.default() : [];
+            let content = '';
+
+            for (let i = 0; i < vnodes.length; i++) {
+                let string = await renderToString(vnodes[i]);
+                let gap = i == 0 ? '' : '\n';
+                content = content + gap + string;
+            }
+
+        let splitContent = content.split(/<page>*<\/page>/);
+            splitContent.forEach((subContent, index) => {
+                subContent = subContent.replaceAll(/<\/?page>/g, '')
+                if (subContent) {
+                    let splitSubContent = subContent.match(/<page-front>.*?<\/page-front>|<page-back>.*?<\/page-back>/g)
+                    splitSubContent = splitSubContent.map(match => 
+                        match.replace(/<\/?page-front>|<\/?page-back>/g, '')
+                    );
+
+                    this.pages.push({
+                        index,
+                        content: {
+                            front: splitSubContent[0],
+                            back: splitSubContent[1]
+                        }
+                    })      
+                }
+            })
+
+            this.slotContent = content;
+        },
     },
-    mounted() {
+    async mounted() {
         this.setPageZindex()
+        this.setPageShadow()
+        this.renderSlotContent()
     },
 }
 </script>
