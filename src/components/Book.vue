@@ -5,8 +5,7 @@
         </button>
         <div class="book-cover">
             <div class="book-interior">
-                <Page v-for="(page, index) in pages" :key="index" :msg="'Page ' + (index + 1)" >
-                    <!-- <slot :name="`page-${index}-front`"></slot> -->
+                <Page v-for="(page, index) in pages" :key="index">
                     <template v-slot:page-front>
                         <div v-html="page.content.front"></div>
                     </template>
@@ -31,7 +30,6 @@ export default {
     components: {
         Page
     },
-    // props: ['pages'],
     data() {
         return {
             slotContent: '',
@@ -81,14 +79,19 @@ export default {
             }
         },
         setPageZindex() {
-            this.pages.forEach((pageData, index) => {
-                let page = document.querySelectorAll('.book-page')[index];
-                if (page.classList.contains('flipped')) {
-                    page.style.zIndex = ''
-                } else {
-                    page.style.zIndex = this.pages.length - index
-                }
-            });
+            setTimeout(() => {
+                this.pages.forEach((pageData, index) => {
+                    let page = document.querySelectorAll('.book-page')[index];
+                    if (page) {
+                        if (page.classList.contains('flipped')) {
+                            page.style.zIndex = ''
+                        } else {
+                            page.style.zIndex = this.pages.length - index
+                        }
+                        
+                    }
+                });
+            }, 0)
         },
         async renderSlotContent() {
             const vnodes = this.$slots.default ? this.$slots.default() : [];
@@ -100,26 +103,34 @@ export default {
                 content = content + gap + string;
             }
 
-        let splitContent = content.split(/<page>*<\/page>/);
+            let splitContent = content.match(/<page>.*?<\/page>/g);
             splitContent.forEach((subContent, index) => {
                 subContent = subContent.replaceAll(/<\/?page>/g, '')
                 if (subContent) {
                     let splitSubContent = subContent.match(/<page-front>.*?<\/page-front>|<page-back>.*?<\/page-back>/g)
-                    splitSubContent = splitSubContent.map(match => 
-                        match.replace(/<\/?page-front>|<\/?page-back>/g, '')
-                    );
+                    if (splitSubContent) {
+                        splitSubContent = splitSubContent.map(match => 
+                            match.replace(/<\/?page-front>|<\/?page-back>/g, '')
+                        );
 
-                    this.pages.push({
-                        index,
-                        content: {
-                            front: splitSubContent[0],
-                            back: splitSubContent[1]
-                        }
-                    })      
+                        this.pages.push({
+                            index,
+                            content: {
+                                front: splitSubContent[0],
+                                back: splitSubContent[1]
+                            }
+                        }) 
+                    } else {
+                        this.pages.push({
+                            index,
+                            content: {
+                                front: subContent,
+                                back: ''
+                            }
+                        })
+                    }
                 }
             })
-
-            this.slotContent = content;
         },
     },
     async mounted() {

@@ -20,10 +20,10 @@
 				</page-back>
 			</page>
 
+			<page>
+				Hi
+			</page>
 		</Book>
-		<!-- <page>
-			Hi
-		</page> -->
 	</div>
 </template>
 
