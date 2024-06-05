@@ -33,10 +33,8 @@ export default {
         perspective: 1500px;
         backface-visibility: hidden;
         border-radius: 0 8px 8px 0;
-        // background-color: #fff;
-
+        text-align: justify;
         z-index: var(--zIndex);
-        // overflow: hidden;
         .book-page-front, .book-page-back {
             width: 100%; height: 100%;
             padding: 16px 32px;

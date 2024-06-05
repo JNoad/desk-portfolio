@@ -7,7 +7,7 @@
             <div class="book-interior">
                 <Page v-for="(page, index) in pages" :key="index">
                     <template v-slot:page-front>
-                        <div v-html="page.content.front"></div>
+                        <div v-html="page.content.front" style="width: 100%; height: 100%"></div>
                     </template>
                     <template v-slot:page-back>
                         <div v-html="page.content.back"></div>
@@ -32,7 +32,9 @@ export default {
     },
     data() {
         return {
-            slotContent: '',
+            currentPage: 1,
+            flippedPages: [],
+            unflippedPages: [],
             contentLeft: '',
             contentRight: '',
             pages: [],
@@ -137,6 +139,9 @@ export default {
         this.setPageZindex()
         this.setPageShadow()
         this.renderSlotContent()
+        setTimeout(() => {
+            this.pageForeward()
+        }, 750)
     },
 }
 </script>
