@@ -14,7 +14,7 @@
                 <router-link to="testimonials">Testimonials</router-link>
             </li>
         </ul>
-        <img class="shelf" src="@/assets/shelf.png">
+        <div class="shelf"></div>
     </nav>
     <router-link to="/" id="back-btn" v-else>
 		<img width="48" height="48" src="https://img.icons8.com/fluency-systems-filled/48/000000/circled-left-2--v2.png" alt="circled-left-2--v2"/>
@@ -31,7 +31,9 @@ export default {
 </script>
 <style lang="scss">
     nav {
-        padding: 0;
+        padding: 0; margin: 0;
+        position: absolute; bottom: 0; left: 0;
+        width: 100%;
         ul {
             display: flex;
             z-index: 11;
@@ -94,16 +96,16 @@ export default {
                 }
             }
         }
-    }
-    .shelf {
-        width: 500px;
-        height: 10px;
-        margin: auto;
-        background-size: cover;
-        // border: 1px solid black;
-        position: relative;
-        bottom: 16px;
-        z-index: 10;
+        .shelf {
+            width: 500px; height: 10px;
+            margin: auto;
+            background-size: cover;
+            // border: 1px solid black;
+            position: relative;
+            // bottom: 16px;
+            z-index: 10;
+            background-color: burlywood; border: 1px solid black;
+        }
     }
 
     #back-btn {
