@@ -25,7 +25,7 @@ export default {
 </script>
 <style lang="scss">
     .pinnedNote {
-        $pinSize: 20px;
+        $pinSize: 25px;
         display: flex; flex-direction: column;
         width: 200px; height: 250px;
         position: relative;

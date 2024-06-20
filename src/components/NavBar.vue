@@ -1,6 +1,6 @@
 <template>
     <nav v-if="showBookShelf">
-        <ul>
+        <!-- <ul>
             <li class="book-red">
                 <router-link to="about">About Me</router-link>
             </li>
@@ -13,7 +13,8 @@
             <li class="book-orange">
                 <router-link to="testimonials">Testimonials</router-link>
             </li>
-        </ul>
+        </ul> -->
+
         <Laptop/>
         <div class="shelf"></div>
     </nav>
@@ -25,6 +26,9 @@
 <script>
 import Laptop from '@/components/Laptop.vue';
 export default {
+    components: {
+        Laptop
+    },
     computed: {
         showBookShelf() {
             return this.$route.path == '/';
@@ -37,6 +41,8 @@ export default {
         padding: 0; margin: 0;
         position: absolute; bottom: 0; left: 0;
         width: 100%;
+        display: flex; flex-direction: column;
+        justify-content: center; align-items: center;
         ul {
             display: flex;
             z-index: 11;
