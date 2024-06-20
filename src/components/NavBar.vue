@@ -97,7 +97,7 @@ export default {
     }
     .shelf {
         width: 500px;
-        height: 75px;
+        height: 10px;
         margin: auto;
         background-size: cover;
         // border: 1px solid black;
