@@ -14,13 +14,16 @@
                 <router-link to="testimonials">Testimonials</router-link>
             </li>
         </ul>
+        <Laptop/>
         <div class="shelf"></div>
     </nav>
     <router-link to="/" id="back-btn" v-else>
 		<img width="48" height="48" src="https://img.icons8.com/fluency-systems-filled/48/000000/circled-left-2--v2.png" alt="circled-left-2--v2"/>
 	</router-link>
 </template>
+
 <script>
+import Laptop from '@/components/Laptop.vue';
 export default {
     computed: {
         showBookShelf() {
