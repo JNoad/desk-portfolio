@@ -3,7 +3,7 @@
     <div class="laptop">
         <div class="laptop-top">
             <div class="laptop-screen">
-                <div class="screen-content">
+                <div class="screen-content" @click="$router.push('/projects')">
 
                 </div>
             </div>
@@ -48,9 +48,9 @@ export default {
             }
         }
         .laptop-bottom {
-            width: calc(100% * 1.2); height: 8px;
+            width: calc(100% * 1.18); height: 10px;
             background-color: #111; border: 1px solid black;
-            border-radius: 2px 2px 4px 4px;
+            border-radius: 4px 4px 8px 8px;
         }
     }
 </style>
