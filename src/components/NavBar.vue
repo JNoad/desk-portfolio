@@ -212,7 +212,13 @@ export default {
     }
 
     #back-btn {
+        width: 48px; height: 48px;
 		position: absolute;
 		top: 5px; left: 5px;
+        margin: auto;
+        img {
+            border-radius: 100%;
+            background-color: #fff;
+        }
 	}
 </style>
