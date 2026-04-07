@@ -77,13 +77,13 @@ export default {
     }
 
     @keyframes flutter {
-        $size: 15deg;
+        $size: 10deg;
         0% {
-            transform: rotateX(-$size);
+            transform: rotateX(-$size) rotateY(-calc($size * 0.75));
             transform-origin: top;
         }
         100% {
-            transform: rotateX($size);
+            transform: rotateX($size) rotateY(calc($size * 0.75));
             transform-origin: top;
         }
     }
