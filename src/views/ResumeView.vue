@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="resume">
         <Book>
             <page>
                 <page-front>
@@ -38,5 +38,10 @@ export default {
 }
 </script>
 <style lang="scss">
-    
+    #resume {
+		height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 </style>

@@ -50,7 +50,7 @@ export default {
     nav {
         padding: 0; margin: 0;
         position: absolute; bottom: 0; left: 0;
-        width: 100%; height: 260px;
+        width: 100%; height: 220px;
         display: flex; flex-direction: column;
         justify-content: center; align-items: center;
         align-content: end;
