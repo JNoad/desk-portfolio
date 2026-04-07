@@ -60,7 +60,10 @@ export default {
                 background-image: url(https://img.freepik.com/free-photo/jungle-landscape-pixel-art-style_23-2151557050.jpg);
                 background-size: 100% 100%;
                 
-
+                cursor: url(../assets/cursor_pointer.png), pointer;
+                &:active {
+                    cursor: url(../assets/cursor_pointer_click.png), pointer;
+                }
             }
         }
     }
