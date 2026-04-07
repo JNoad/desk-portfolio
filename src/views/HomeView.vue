@@ -26,6 +26,7 @@ export default {
         margin: auto; padding-top: 50px;
         width: 80%;
         height: 100vh;
+        overflow: hidden;
     }
     .cork {
         border: 1px solid rgba(0, 0, 0, 0.8);

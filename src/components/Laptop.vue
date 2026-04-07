@@ -8,7 +8,10 @@
                 </div>
             </div>
         </div>
-        <div class="laptop-bottom"></div>
+        <div class="laptop-bottom">
+            <div class="keyboard"></div>
+            <div class="side"></div>
+        </div>
     </div>
 </template>
 <script>
@@ -18,15 +21,21 @@ export default {
 </script>
 <style lang="scss">
     .laptop {
-        perspective: 1500px;
-        display: flex; flex-direction: column;
+        perspective: 1000px;
+        // display: flex; flex-direction: column;
         align-items: center;
         $transitionSpeed: 0.7s;
+        width: 22em;
+        height: 110%;
+        //overflow: hidden;
+        bottom: 25%;
+        z-index: 11;
         .laptop-top {
-            width: 300px; height: 200px;
-            padding: 8px 4px;
+            flex-grow: 0;
+            width: 70%; height: 60%;
+            padding: 8px 4px; margin: 0 auto; margin-top: 16px;
             background-color: #111; border-radius: 8px 8px 0 0;
-            transform-origin: bottom; transform: rotateX(-60deg);
+            transform-origin: bottom ; transform: rotateX(-60deg);
             transition: all $transitionSpeed;
             cursor: pointer;
             .laptop-screen {
@@ -39,7 +48,6 @@ export default {
                     opacity: 0; transition: all $transitionSpeed;
                 }
             }
-
             &:hover {
                 transform: rotateX(30deg);
                 .screen-content {
@@ -48,9 +56,26 @@ export default {
             }
         }
         .laptop-bottom {
-            width: calc(100% * 1.18); height: 10px;
-            background-color: #111; border: 1px solid black;
-            border-radius: 4px 4px 8px 8px;
+            width: 70%; height: 70%;
+            margin: 0 auto;
+            align-content: center;
+            perspective: 1000px;
+            transform-origin: top;
+            transform: rotateX(80deg);
+            .keyboard {
+                width: 100%;
+                height: 100%;
+                background-color: #111; border: 1px solid black;
+            }
+            .side {
+                width: 100%; height: 30px;
+                background-color: #111; border: 1px solid black;
+                border-radius: 20% 20% 40% 40%;
+                transform-origin: top;
+                transform: rotateX(-10deg);
+                position: relative;
+                top: -6px;
+            }
         }
     }
 </style>
