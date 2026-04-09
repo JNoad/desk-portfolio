@@ -2,15 +2,20 @@
     <div id="projects">
         <div class="laptop-screen">
             <div class="laptop-desktop">
-
+                
             </div>
+            <TaskbarNav/>
+            <div class="camera"></div>
         </div>
     </div>
 </template>
 <script>
-export default {
-    
-}
+    import TaskbarNav from '@/components/TaskbarNav.vue';
+    export default {
+        components: {
+            TaskbarNav
+        }
+    }
 </script>
 <style lang="scss">
     #projects {
@@ -45,26 +50,90 @@ export default {
         perspective: 1000px;
 
         .laptop-screen {
-            transform: rotateX(1deg);
-            transform-origin: bottom;
-            box-sizing: border-box;
+            transform: rotateX(2deg); transform-origin: bottom;
             width: 99.5%; height: 100%;
             margin: 0.25% auto;
+
             --frameColor: #282828;
+            background-color: var(--frameColor);
             border: 32px solid var(--frameColor);
             border-top: 40px solid var(--frameColor);
             border-radius: 32px 32px 0 0;
 
+            display: flex; flex-direction: column;
+            
+            animation: creakScreen 8s ease-in-out 2s infinite alternate;
+            
             .laptop-desktop {
                 width: 100%; height: 100%;
                 background-image: url(https://img.freepik.com/free-photo/jungle-landscape-pixel-art-style_23-2151557050.jpg);
                 background-size: 100% 100%;
+                border-radius: 12px 12px 0 0;
                 
+                box-shadow: 
+                inset 0 3px 6px -2px black, 
+                inset 6px 0px 6px -6px rgba(0, 0, 0, 0.8), 
+                inset -6px 0px 6px -6px rgba(0, 0, 0, 0.8)
+            ;
+            position: relative;
+            &::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                /* Use 'soft-light' or 'overlay' to affect the content visually */
+                background: linear-gradient(180deg, transparent 62%, rgba(255,255,255,0.95) 70%, transparent 78%); // glare
+                mix-blend-mode: overlay; 
+                pointer-events: none;
+                animation: creakScreenGlare 8s ease-in-out 2s infinite alternate;
+            }             
+            }
+
+            & * {
                 cursor: url(../assets/cursor_pointer.png), pointer;
                 &:active {
                     cursor: url(../assets/cursor_pointer_click.png), pointer;
                 }
             }
+
+            .camera {
+                width: 30px; height: 30px;
+                border-radius: 50%;
+                background: 
+                    /* 1. Small white reflection (glare) */
+                    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4) 0%, transparent 15%),
+                    /* 2. Dark blue sensor glow */
+                    radial-gradient(circle at center, #1a2a44 0%, transparent 45%),
+                    /* 3. Outer lens depth (slight metallic/dark grey ring) */
+                    radial-gradient(circle at center, #050505 30%, #111 60%, #333 100%);
+                box-shadow: inset 0 0 10px rgba(0, 0, 0, 1), 0 0 1px 1px rgba(255, 255, 255, 0.2);
+                position: absolute;
+                top: -35px; left: calc(50% - 15px);
+            }
+        }
+    }
+
+    @keyframes creakScreen {
+        $size: 0.5deg;
+        $default: 2deg;
+        0% {
+            transform: rotateX($default - $size);
+        }
+        75% {
+            transform: rotateX($default + $size);
+        }
+        100% {
+            transform: rotateX($default + $size);
+        }
+    }
+    @keyframes creakScreenGlare {
+        0% {
+            transform: translateY(-10%);
+        }
+        75% {
+            transform: rotateX(0%);
+        }
+        100% {
+            transform: rotateX(10%);
         }
     }
 </style>

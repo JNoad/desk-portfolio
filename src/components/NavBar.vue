@@ -46,7 +46,7 @@ export default {
     }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
     nav {
         padding: 0; margin: 0;
         position: absolute; bottom: 0; left: 0;
@@ -216,6 +216,7 @@ export default {
 		position: absolute;
 		top: 5px; left: 5px;
         margin: auto;
+        z-index: 10000;
         img {
             border-radius: 100%;
             background-color: #fff;
