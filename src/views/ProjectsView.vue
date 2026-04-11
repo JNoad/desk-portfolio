@@ -1,8 +1,8 @@
 <template>
     <div id="projects">
         <div class="laptop-screen">
-            <div class="laptop-desktop">
-                
+            <div class="laptop-desktop" @mousemove="dragWindow">
+                <ProjectWindow ref="projectWindow"/>
             </div>
             <TaskbarNav/>
             <div class="camera"></div>
@@ -10,10 +10,23 @@
     </div>
 </template>
 <script>
+    import ProjectWindow from '@/components/ProjectWindow.vue';
     import TaskbarNav from '@/components/TaskbarNav.vue';
     export default {
         components: {
-            TaskbarNav
+            TaskbarNav,
+            ProjectWindow
+        },
+        methods: {
+            dragWindow(e) {
+                e.preventDefault();
+                if (this.$refs.projectWindow) {
+                    this.$refs.projectWindow.drag(e);
+                }
+            }
+        },
+        mounted() {
+            console.clear()
         }
     }
 </script>
@@ -62,14 +75,14 @@
 
             display: flex; flex-direction: column;
             
-            animation: creakScreen 8s ease-in-out 2s infinite alternate;
+            animation: creakScreen 8s ease-in-out 1.5s infinite alternate;
             
             .laptop-desktop {
                 width: 100%; height: 100%;
                 background-image: url(https://img.freepik.com/free-photo/jungle-landscape-pixel-art-style_23-2151557050.jpg);
                 background-size: 100% 100%;
                 border-radius: 12px 12px 0 0;
-                
+                overflow: hidden;
                 box-shadow: 
                 inset 0 3px 6px -2px black, 
                 inset 6px 0px 6px -6px rgba(0, 0, 0, 0.8), 
@@ -81,10 +94,10 @@
                 position: absolute;
                 inset: 0;
                 /* Use 'soft-light' or 'overlay' to affect the content visually */
-                background: linear-gradient(180deg, transparent 62%, rgba(255,255,255,0.95) 70%, transparent 78%); // glare
+                background: linear-gradient(180deg, transparent 60%, rgba(255,255,255,0.5) 70%, transparent 80%); // glare
                 mix-blend-mode: overlay; 
                 pointer-events: none;
-                animation: creakScreenGlare 8s ease-in-out 2s infinite alternate;
+                animation: creakScreenGlare 8s ease-in-out 1.5s infinite alternate;
             }             
             }
 
@@ -113,12 +126,12 @@
     }
 
     @keyframes creakScreen {
-        $size: 0.5deg;
+        $size: 0.65deg;
         $default: 2deg;
         0% {
             transform: rotateX($default - $size);
         }
-        75% {
+        80% {
             transform: rotateX($default + $size);
         }
         100% {
@@ -126,14 +139,15 @@
         }
     }
     @keyframes creakScreenGlare {
+        $size: 8%;
         0% {
-            transform: translateY(-10%);
+            transform: translateY(-$size);
         }
-        75% {
+        80% {
             transform: rotateX(0%);
         }
         100% {
-            transform: rotateX(10%);
+            transform: rotateX($size);
         }
     }
 </style>
